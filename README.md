@@ -1,4 +1,4 @@
-Hackathon Started CRUD Generator
+Hackathon Starter CRUD Generator
 ======================
 
 Generates all the CRUD Code for Hackathon Starter
