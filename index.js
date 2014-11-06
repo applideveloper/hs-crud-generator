@@ -12,6 +12,7 @@ prompt.get(['model', 'project'], function (err, result) {
 	controllerPath 	= "controllers/"+name+".js";
 	appPath 		= "app.js";
 	templatesPath 	= "templates/";
+	viewsPath		= "views/"
 
 	fs.mkdir("model","0777", function(err){
     		//Creating Model
@@ -54,8 +55,32 @@ prompt.get(['model', 'project'], function (err, result) {
 					if (err) throw err;
 					console.log(model +' Paths for app.js are created');
 				});
+
+				//Template Files
+
+				fs.mkdir(viewsPath+model,"0777",function(err){
+					if (err) throw err;
+
+					fs.readFile(templatesPath+"view.js",function(err,data){
+						if (err) throw err;
+						fs.appendFile(viewsPath+name+"/create.jade",data,function(err){
+							if (err) throw err;
+						}); //index,create,view,edit
+						fs.appendFile(viewsPath+name+"/index.jade",data,function(err){
+							if (err) throw err;
+						});
+						fs.appendFile(viewsPath+name+"/view.jade",data,function(err){
+							if (err) throw err;
+						});
+						fs.appendFile(viewsPath+name+"/edit.jade",data,function(err){
+							if (err) throw err;
+						});
+						console.log("Generated View Files");
+					});
+				});
+
 			});
 		});
-		  });
+	});
 });
 });

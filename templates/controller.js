@@ -15,7 +15,7 @@ exports.index = function(req, res) {
 };
 
 exports.new = function(req, res) {
-		res.render('<model>/create<Model>', {
+		res.render('<model>/create', {
     	title: ' New | <project>',
   });
 };
@@ -36,7 +36,7 @@ exports.create = function(req, res) {
 exports.show = function(req, res) {
 	var id = req.params.id;
   <Model>.findOne({_id:id},function(err,<model>){
-  		res.render('<model>/view<Model>', {
+  		res.render('<model>/view', {
     	title: '<project>',
     	<model> : <model>,
   		});	
@@ -46,7 +46,7 @@ exports.show = function(req, res) {
 exports.edit = function(req, res) {
   var id = req.params.id;
   <Model>.findOne({_id:id},function(err,<model>){
-          res.render('veera/edit<Model>', {
+          res.render('<model>/edit', {
             title: '<project>',
             <model> : <model>,
       });   
