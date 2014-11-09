@@ -27,6 +27,7 @@ exports.create = function(req, res) {
 	var <Model> = new <Model>({
 		//title: ntitle,
 		//desc: ndesc,
+		<createModelProp>
     //set other Variables
   });
 	<Model>.save();
@@ -59,6 +60,7 @@ exports.update = function(req, res) {
   <Model>.findOne({_id:req.params.id},function(err,<model>){
     // model.title = ntitle,
     // model.desc = ndesc,
+    <updateModelProp>
     <model>.save();
   });
 
