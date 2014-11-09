@@ -31,7 +31,7 @@ prompt.get(['model', 'project'], function (err, result) {
 
 		var updateModelProp = "";
 		for(var attributename in properties){
-			updateModelProp = updateModelProp+ name+"."+attributename+": req.param('"+attributename+"'),\n\t";
+			updateModelProp = updateModelProp+ name+"."+attributename+"= req.param('"+attributename+"'),\n\t";
 		}	
 		modelProp = true;
 	}

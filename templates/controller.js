@@ -6,10 +6,10 @@ var express = require('express'),
 var app = express();
 
 exports.index = function(req, res) {
-		<Model>.find(function(err,<model>){
+		<Model>.find(function(err,<model>s){
 		res.render('<model>/index', {
     	title: '<project>',
-    	<model> : <model>
+    	<model>s : <model>s
   });
 	});
 };
@@ -24,13 +24,13 @@ exports.create = function(req, res) {
 //var ntitle = req.body.title;
 //var ndesc = req.param('desc');
 // Get other varialbes 
-	var <Model> = new <Model>({
+	var <model> = new <Model>({
 		//title: ntitle,
 		//desc: ndesc,
 		<createModelProp>
     //set other Variables
   });
-	<Model>.save();
+	<model>.save();
 	res.redirect('/<model>/');
 };
 
