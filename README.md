@@ -5,7 +5,7 @@ Generates all the CRUD Code for Hackathon Starter .
 
 Generates Model , Controller , Routes , View files . 
 
-Usage : node index.js
+Usage : node index.js name:'String',title:'String'
 
 Give the model name and Project Name to generate Code . Sitback, relax while it generates the code for you :D .
 
