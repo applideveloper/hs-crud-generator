@@ -2,19 +2,53 @@ var fs = require('fs');
 var prompt = require('prompt');
 var changeCase = require('change-case');
 
+
 prompt.start();
 prompt.get(['model', 'project'], function (err, result) {
 	var name 	= changeCase.lower(result.model);
 	var project = result.project;
 	var model 	= changeCase.upperCaseFirst(result.model);
+	var args 	= process.argv.slice(2);
+	var modelProp = false;
+	if(args[0] != null)
+	{ 
+		var properties = JSON.stringify(eval("({" + args[0] + "})"));
+		properties = JSON.parse(properties);
 
-	modelPath 		= "model/"+model+".js";
+		//Making Model String 
+		var modelString="";
+		for(var attributename in properties){
+			modelString = modelString+ attributename+": "+properties[attributename]+",\n\t";
+		}
+
+		//Making CreateRoute Model Properties
+		var createModelProp = "";
+		for(var attributename in properties){
+			createModelProp = createModelProp+ attributename+": req.param('"+attributename+"'),\n\t";
+		}
+
+		//Update Route Properties
+
+		var updateModelProp = "";
+		for(var attributename in properties){
+			updateModelProp = updateModelProp+ name+"."+attributename+"= req.param('"+attributename+"'),\n\t";
+		}	
+		modelProp = true;
+	}
+	else
+	{
+		console.log("Model Arguments not Given");
+		modelProp = false;
+	}
+	
+
+	modelPath 		= "models/"+model+".js";
 	controllerPath 	= "controllers/"+name+".js";
 	appPath 		= "app.js";
 	templatesPath 	= "templates/";
 	viewsPath		= "views/"
 
-	fs.mkdir("model","0777", function(err){
+	fs.mkdir("models","0777", function(err){
     		//Creating Model
 
     		fs.readFile(templatesPath+"model.js", function (err, data) {
@@ -23,6 +57,11 @@ prompt.get(['model', 'project'], function (err, result) {
     			data = data.toString();
     			data = data.replace(/<model>/g,changeCase.lower(model));
     			data = data.replace(/<Model>/g,model);
+    			if(modelProp)
+    			{
+    				data = data.replace(/<properties>/g,modelString);	
+    			}
+    			
     			fs.appendFile(modelPath, data, function (err) {
     				if (err) throw err;
     				console.log(model+' Model is Created');
@@ -37,6 +76,11 @@ prompt.get(['model', 'project'], function (err, result) {
 		  		data = data.replace(/<model>/g,changeCase.lower(model));
 		  		data = data.replace(/<Model>/g,model);
 		  		data = data.replace(/<project>/g,project);
+		  		if(modelProp)
+		  		{
+		  			data = data.replace(/<createModelProp>/g,createModelProp);
+		  			data = data.replace(/<updateModelProp>/g,updateModelProp);	
+		  		}
 		  		fs.appendFile(controllerPath, data, function (err) {
 		  			if (err) throw err;
 		  			console.log(model +' Controller is Created');
@@ -58,7 +102,7 @@ prompt.get(['model', 'project'], function (err, result) {
 
 				//Template Files
 
-				fs.mkdir(viewsPath+model,"0777",function(err){
+				fs.mkdir(viewsPath+name,"0777",function(err){
 					if (err) throw err;
 
 					fs.readFile(templatesPath+"view.js",function(err,data){
