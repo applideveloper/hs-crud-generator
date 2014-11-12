@@ -2,8 +2,6 @@ var fs = require('fs');
 var prompt = require('prompt');
 var changeCase = require('change-case');
 
-<<<<<<< HEAD
-
 prompt.start();
 prompt.get(['model', 'project'], function (err, result) {
 	var name 	= changeCase.lower(result.model);
@@ -41,7 +39,6 @@ prompt.get(['model', 'project'], function (err, result) {
 		console.log("Model Arguments not Given");
 		modelProp = false;
 	}
-	
 
 	modelPath 		= "models/"+model+".js";
 	controllerPath 	= "controllers/"+name+".js";
@@ -58,57 +55,6 @@ prompt.get(['model', 'project'], function (err, result) {
     			data = data.toString();
     			data = data.replace(/<model>/g,changeCase.lower(model));
     			data = data.replace(/<Model>/g,model);
-    			if(modelProp)
-    			{
-    				data = data.replace(/<properties>/g,modelString);	
-    			}
-    			
-    			fs.appendFile(modelPath, data, function (err) {
-    				if (err) throw err;
-    				console.log(model+' Model is Created');
-    			});	
-
-		  	//Creating Controller With CRUD Methods
-
-		  	fs.readFile(templatesPath+"controller.js", function (err, data) {
-		  		if (err) throw err;
-
-		  		data = data.toString();
-		  		data = data.replace(/<model>/g,changeCase.lower(model));
-		  		data = data.replace(/<Model>/g,model);
-		  		data = data.replace(/<project>/g,project);
-		  		if(modelProp)
-		  		{
-		  			data = data.replace(/<createModelProp>/g,createModelProp);
-		  			data = data.replace(/<updateModelProp>/g,updateModelProp);	
-		  		}
-		  		fs.appendFile(controllerPath, data, function (err) {
-		  			if (err) throw err;
-		  			console.log(model +' Controller is Created');
-		  		});
-
-=======
-prompt.start();
-prompt.get(['model', 'project'], function (err, result) {
-	var name 	= changeCase.lower(result.model);
-	var project = result.project;
-	var model 	= changeCase.upperCaseFirst(result.model);
-
-	modelPath 		= "model/"+model+".js";
-	controllerPath 	= "controllers/"+name+".js";
-	appPath 		= "app.js";
-	templatesPath 	= "templates/";
-	viewsPath		= "views/"
-
-	fs.mkdir("model","0777", function(err){
-    		//Creating Model
-
-    		fs.readFile(templatesPath+"model.js", function (err, data) {
-    			if (err) throw err;
-
-    			data = data.toString();
-    			data = data.replace(/<model>/g,changeCase.lower(model));
-    			data = data.replace(/<Model>/g,model);
     			fs.appendFile(modelPath, data, function (err) {
     				if (err) throw err;
     				console.log(model+' Model is Created');
@@ -128,7 +74,6 @@ prompt.get(['model', 'project'], function (err, result) {
 		  			console.log(model +' Controller is Created');
 		  		});
 
->>>>>>> b446302aa56e91ff50d7e4b4e754a756ea289aa9
 			// Creating Paths for CRUD Controller to be used in app.js
 
 			fs.readFile(templatesPath+"paths.js", function (err, data) {
@@ -145,11 +90,10 @@ prompt.get(['model', 'project'], function (err, result) {
 
 				//Template Files
 
-<<<<<<< HEAD
+
 				fs.mkdir(viewsPath+name,"0777",function(err){
-=======
-				fs.mkdir(viewsPath+model,"0777",function(err){
->>>>>>> b446302aa56e91ff50d7e4b4e754a756ea289aa9
+
+
 					if (err) throw err;
 
 					fs.readFile(templatesPath+"view.js",function(err,data){
